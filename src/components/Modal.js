@@ -1,14 +1,9 @@
-import {useState} from 'react'
-
-const Modal = ({children, visible}) => {
-    const [isVisible, setIsVisible] = useState(false)
-
+const ModalContainer = ({children}) => {
     return(
-        <div>
+        <section>
             {children}
-        </div>
+        </section>
     )
 }
 
-
-export default Modal
+export default ModalContainer

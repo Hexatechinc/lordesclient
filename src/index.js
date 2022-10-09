@@ -1,16 +1,61 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import './index.css';
-import { ApolloClient, InMemoryCache, ApolloProvider, gql } from '@apollo/client';
+import { ApolloClient, ApolloProvider, gql, createHttpLink} from '@apollo/client';
+import {setContext} from '@apollo/client/link/context'
 import "@fontsource/inter/variable.css"
 import App from './App';
+import {cache} from './cache'
 import * as serviceWorkerRegistration from './serviceWorkerRegistration';
 import reportWebVitals from './reportWebVitals';
 
-const client = new ApolloClient({
-  uri: process.env.REACT_APP_TEST_API_URI,
-  cache: new InMemoryCache(),
+
+export const typeDefs = gql`
+  extend type Query{
+    isSignedIn: Boolean!
+  }
+`
+const httpLink = createHttpLink({
+  uri: 'http://localhost:5001/api',
 });
+
+const authLink = setContext((_, { headers }) => {
+  // get the authentication token from local storage if it exists
+  const token = localStorage.getItem('token');
+  // return the headers to the context so httpLink can read them
+  return {
+    headers: {
+      ...headers,
+      authorization: token ? token : "",
+    }
+  }
+});
+
+
+
+const client = new ApolloClient({
+  cache: cache,
+  link: authLink.concat(httpLink),
+  typeDefs,
+  connectToDevTools: true
+});
+
+
+// client
+//    .query({
+//      query: gql`
+//        query TestQuery {
+//          users {
+//            id
+//            username
+//            email
+//          }
+//        }
+//      `
+//    })
+//    .then(result => console.log(result));
+
+
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(

@@ -1,12 +1,14 @@
+import Nav from '../components/Nav' 
+import Header from '../components/Header'
 
-//import a different layout component
-import MartLayout from '../components/MarketLayout'
 
 const Market = () => {
     return(
-        <MartLayout>
-            <section></section>
-        </MartLayout>
+        <main>
+            <Nav />
+            <Header pageName="Market Place"/>
+            
+        </main>
     )
 }
 

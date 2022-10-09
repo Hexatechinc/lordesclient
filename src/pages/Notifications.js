@@ -1,12 +1,9 @@
-
-
 const Notifications = () => {
     return(
-            <header>
-                This is my notifications
-            </header>
+        <main>
+            {`These are your notifications`}
+        </main>
     )
 }
-
 
 export default Notifications

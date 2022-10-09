@@ -1,97 +1,33 @@
-import {useEffect, useState} from 'react'
-import {useFormik} from 'formik'
+import UserForm from '../templates/UserForm'
+import {gql, useMutation} from '@apollo/client'
+import {isSignedInVar} from '../cache'
+import {useNavigate} from 'react-router-dom'
+
+export const SIGNUP_USER = gql`
+    mutation signUp($username: String!, $email: String!, $password: String!, $role: String!){
+        signUp(username: $username, email: $email, password: $password, role: $role)
+    }
+`
+
 
 const SignUp = () => {
-
-    const [values, setValues] = useState()
-
-    const handleChange = event => {
-        setValues({
-            ...values,
-            [event.target.name]: event.target.value
-        })
-    }
-
-    const formik = useFormik({
-        initialValues: {
-            firstname: '',
-            lastname: '',
-            username: '', 
-            email: '',
-            password: ''
-        },
-        onSubmit: values => {
-            console.log(JSON.stringify(values, null, 2))
+    const navigate = useNavigate()
+    const [signUp, {loading, error}] = useMutation(SIGNUP_USER, {
+        onCompleted({signUp}) {
+            if (signUp) {
+                localStorage.setItem('token', signUp.token);
+                isSignedInVar(true)
+                navigate('/')
+            }
         }
     })
 
-    useEffect(() => {
-        document.title = 'Sign Up - Lordes'
-    })
-    
-    return(
-        <main>
-            <header>
-                <h1>Sign Up</h1>
-            </header>
-            <form onSubmit={formik.handleSubmit}>
-                <label htmlFor="firstname">First Name</label>
-                <input
-                    required
-                    id="firstname"
-                    name="firstname"
-                    type="text"
-                    placeholder="firstname"
-                    onChange={formik.handleChange}
-                    value={formik.values.username}
-                />
-                <label htmlFor="firstname">Last Name</label>
-                <input
-                    required
-                    id="lastname"
-                    name="lastname"
-                    type="text"
-                    placeholder="lastaname"
-                    onChange={formik.handleChange}
-                    value={formik.values.username}
-                />
-                <label htmlFor="username">Username</label>
-                <input
-                    required
-                    id="username"
-                    name="username"
-                    type="text"
-                    placeholder="username"
-                    onChange={formik.handleChange}
-                    value={formik.values.username}
-                />
-                <label htmlFor="email">email</label>
-                <input
-                    required
-                    id="email"
-                    name="email"
-                    type="email"
-                    placeholder="email"
-                    onChange={formik.handleChange}
-                    value={formik.values.email}
-                />
-                <label htmlFor="password">email</label>
-                <input
-                    required
-                    id="password"
-                    name="password"
-                    type="password"
-                    placeholder="Password"
-                    onChange={formik.handleChange}
-                    value={formik.values.password}
-                />
+    if(loading) return <p>loading...</p>
+    if(error) return <p>An error occured</p>
 
-                <button type='submit'>SignUp</button>
-                <button type='submit'>SignUp as a stylist</button>
-            </form>
-        </main>
+    return(
+        <UserForm action={signUp} formType="signup"/>
     )
 }
-
 
 export default SignUp

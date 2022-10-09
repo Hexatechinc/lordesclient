@@ -1,26 +1,30 @@
-import {useState} from 'react'
-import {useQuery} from '@apollo/client'
-import {Helmet} from 'react-helmet'
+// import {useState} from 'react'
+import {gql, useQuery} from '@apollo/client'
+import DashBoard from './DashBoard'
+import PublicHome from './PublicHome'
 
-//set the outlook of the homep age
-//programatically based on the signin state.
+
+const IS_SIGNED_IN = gql`
+    query IsUserSignedIn {
+        isSignedIn @client
+    }
+`
+
 
 const Home = () => {
-    const [isSignedIn, setIsSignedIn] = useState()
-
+    
+    
     return(
-            <main>
-                <Helmet>
-                    <meta charSet="utf-8" />
-                    <title>Lordes'</title>
-                </Helmet>
-                
-                    <header>
-                        This is the unsigned Home page
-                    </header>
-            </main>
+        <>
+        <IsSignedIn />
+        </>
     )
 }
 
+export function IsSignedIn() {
+    const { data } = useQuery(IS_SIGNED_IN);
+    // console.log(data)
+    return data.isSignedIn ? <DashBoard /> : <PublicHome />;
+  }
 
 export default Home
