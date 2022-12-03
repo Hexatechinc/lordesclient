@@ -36,8 +36,8 @@ const Nav = () => {
     // let activeClassName = "underline";
 
     return data.isSignedIn ? (
-        <nav className="bg-opacity-20 w-full h-14 flex items-center justify-center bg-transparent fixed z-10">
-            <ul className="w-full h-28 flex items-center justify-around">
+        <nav className="">
+            <ul className="">
                 <li>
                     <NavLink 
                     style={({ isActive }) =>
@@ -64,8 +64,8 @@ const Nav = () => {
             </ul>
         </nav>
     ):(
-        <nav className="w-full h-28 flex items-center justify-center">
-            <ul className="w-full h-28 flex items-center justify-around">
+        <nav className="">
+            <ul className="">
                 <li>
                     <NavLink 
                     style={({ isActive }) =>

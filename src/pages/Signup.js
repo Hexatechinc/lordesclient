@@ -17,7 +17,7 @@ const SignUp = () => {
             if (signUp) {
                 localStorage.setItem('token', signUp.token);
                 isSignedInVar(true)
-                navigate('/')
+                navigate('/onboarding/createprofile')
             }
         }
     })

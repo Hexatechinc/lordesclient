@@ -1,14 +1,51 @@
 import Nav from '../components/Nav'
 import SideBar from '../components/SideBar'
+import {gql, useQuery} from '@apollo/client'
+
+
+
+export const GET_MY_DASHBOARD = gql`
+  query GetMyProfile {
+    me {
+      username
+      profile {
+        bio
+        profilePic
+      }
+      role
+      sentRequests {
+        id
+        catItem {
+          id
+          itemCost
+          itemName
+          provider {
+            username
+          }
+        }
+      }
+      services
+      catalogue {
+        itemCost
+        itemDesc
+        itemName
+      }
+    }
+  }
+`;
 
 
 const DashBoard = () => {
+  const{data, loading, error } = useQuery(GET_MY_DASHBOARD)
+  if (loading) return <p>loading...</p>
+  if (error) return <p>Error: {error.message}</p>
+  if(data === undefined) return <p>ERROR</p>
     return(
-        <main className="relative">
+        <main className="">
             <Nav />
-            <main className="w-full relative top-20 grid grid-cols-4 gap-2 items-center justify-evenly px-5">
+            <main className="">
             <SideBar />
-            <section className="col-start-2 col-end-5 border-2 p-2">
+            <section className="">
                 {`This is your dashboard!`}
             </section>
             </main>

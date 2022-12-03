@@ -32,20 +32,20 @@ const UserForm = ({formType, action}) => {
     })
 
     return(
-    <main className="w-full flex items-center justify-between flex-row-reverse p-4 rounded-md bg-neutral-100">
+    <main className="">
         <Helmet>
             <meta charSet="utf-8" />
             {formType === 'signup'? <title>Sign Up - Lordes'</title> : <title>Sign In - Lordes'</title>}
         </Helmet>
-        <header className="p-1 relative border-2 border-black w-2/5 h-screen flex justify-center items-center font-semibold text-4xl">
-            <div className="bg-rose-100 w-full h-full">
-            {formType === 'signup'? <h1>Sign Up</h1> : <h1 className="relative top-3 left-16">Sign In</h1>}
+        <header className="">
+            <div className="">
+            {formType === 'signup'? <h1>Sign Up</h1> : <h1 className="">Sign In</h1>}
             {/* <img src="" alt="" /> */}
             </div>
         </header>
-        <form onSubmit={formik.handleSubmit} className="bg-neutral-100 relative w-3/5 h-screen flex flex-col justify-around items-start">
-            <section className="relative left-28 w-8/12 flex justify-between items-center ">
-                <label htmlFor="username" className="font-medium">Username:</label>
+        <form onSubmit={formik.handleSubmit} className="">
+            <section className="">
+                <label htmlFor="username" className="">Username:</label>
                 <input
                     required
                     id="username"
@@ -54,11 +54,11 @@ const UserForm = ({formType, action}) => {
                     placeholder=" enter a username"
                     onChange={formik.handleChange}
                     value={formik.values.username}
-                    className="border-b-2 border-black outline-none w-96 bg-neutral-100"
+                    className=""
                 />
                 </section>
-                <section className="relative left-28 w-8/12 flex justify-between items-center">
-                <label htmlFor="email" className="font-medium">Email:</label>
+                <section className="">
+                <label htmlFor="email" className="">Email:</label>
                 <input
                     required
                     id="email"
@@ -67,11 +67,11 @@ const UserForm = ({formType, action}) => {
                     placeholder=" enter your email"
                     onChange={formik.handleChange}
                     value={formik.values.email}
-                    className="outline-none border-b-2 border-black w-96 bg-neutral-100"
+                    className=""
                 />
                 </section>
-                <section className="relative left-28 w-8/12 flex justify-between items-center">
-                <label htmlFor="password" className="font-medium">Password:</label>
+                <section className="">
+                <label htmlFor="password" className="">Password:</label>
                 <input
                     required
                     id="password"
@@ -80,7 +80,7 @@ const UserForm = ({formType, action}) => {
                     placeholder=" enter your password"
                     onChange={formik.handleChange}
                     value={formik.values.password}
-                    className="outline-none border-b-2 border-black w-96 bg-neutral-100"
+                    className=""
                 />
                 </section>
                 {formType === 'signup' && (
@@ -113,7 +113,7 @@ const UserForm = ({formType, action}) => {
                     isPrimary={true} 
                     type='submit'
                     btnname={formType === 'signup'? 'SignUp': 'SignIn'} 
-                    className="relative left-1/4 mx-14"
+                    className=""
                     />
         </form>
     </main>)

@@ -2,7 +2,7 @@
 
 const Header = ({pageName}) => {
     return(
-        <header className="h-screen w-full bg-rose-200">
+        <header className="">
             {pageName}
         </header>
     )

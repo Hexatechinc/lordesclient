@@ -1,8 +1,8 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
-import './index.css';
 import { ApolloClient, ApolloProvider, gql, createHttpLink} from '@apollo/client';
-import {setContext} from '@apollo/client/link/context'
+import { setContext } from '@apollo/client/link/context'
+import {createUploadLink} from 'apollo-upload-client'
 import "@fontsource/inter/variable.css"
 import App from './App';
 import {cache} from './cache'
@@ -15,8 +15,10 @@ export const typeDefs = gql`
     isSignedIn: Boolean!
   }
 `
+
+const uploadLink = createUploadLink()
 const httpLink = createHttpLink({
-  uri: 'http://localhost:5001/api',
+  uri: 'http://localhost:5000/graphql',
 });
 
 const authLink = setContext((_, { headers }) => {
@@ -35,25 +37,12 @@ const authLink = setContext((_, { headers }) => {
 
 const client = new ApolloClient({
   cache: cache,
-  link: authLink.concat(httpLink),
+  link: authLink.concat(httpLink, uploadLink),
   typeDefs,
   connectToDevTools: true
 });
 
 
-// client
-//    .query({
-//      query: gql`
-//        query TestQuery {
-//          users {
-//            id
-//            username
-//            email
-//          }
-//        }
-//      `
-//    })
-//    .then(result => console.log(result));
 
 
 
